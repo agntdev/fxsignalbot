@@ -1,0 +1,14 @@
+[
+  {
+    "name": "owner controls explain when no owner chat is configured",
+    "steps": [
+      { "send": { "callback": "owner:home" }, "expect": [{ "method": "answerCallbackQuery" }, { "method": "editMessageText", "payload": { "text": "Owner controls aren’t configured for this bot yet." } }] }
+    ]
+  },
+  {
+    "name": "payment failure retains free access",
+    "steps": [
+      { "send": { "callback": "payment:failed" }, "expect": [{ "method": "editMessageText", "payload": { "text": "Your payment didn’t complete. Your account remains on the free daily digest. Choose Paid signals to try again." } }] }
+    ]
+  }
+]

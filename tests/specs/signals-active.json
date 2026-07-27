@@ -5,9 +5,9 @@
       {
         "expect": [
           {
-            "method": "sendMessage",
+            "method": "editMessageText",
             "payload": {
-              "text": "List current open signals with execution options"
+              "text": "No active signals right now. Your next verified signal will appear here."
             }
           }
         ],

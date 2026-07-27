@@ -7,10 +7,21 @@
         "expect": [
           {
             "method": "sendMessage",
-            "payload": { "text": "👋 Welcome! Tap a button below to get started." }
+            "payload": { "text": "Forex signals, tailored to your risk.\nChoose a plan to begin, then set your risk and preferred pairs." }
           }
         ]
       }
+    ]
+  },
+  {
+    "name": "onboarding selects a free subscription, risk, and pair",
+    "steps": [
+      { "send": { "text": "/start" }, "expect": [{ "method": "sendMessage" }] },
+      { "send": { "callback": "sub:choose" }, "expect": [{ "method": "editMessageText", "payload": { "text": "Choose access for your trading workflow." } }] },
+      { "send": { "callback": "sub:free" }, "expect": [{ "method": "editMessageText", "payload": { "text": "Free access includes the daily digest. Set your risk to continue." } }] },
+      { "send": { "callback": "risk:1" }, "expect": [{ "method": "editMessageText", "payload": { "text": "Select the pairs you want to follow. Tap pairs to add or remove them." } }] },
+      { "send": { "callback": "pair:EURUSD" }, "expect": [{ "method": "editMessageText", "payload": { "text": "Selected pairs: EUR/USD.\nChoose more or finish setup." } }] },
+      { "send": { "callback": "pair:finish" }, "expect": [{ "method": "editMessageText", "payload": { "text": "Free daily digest access is selected.\nRisk: 1% per trade.\nPairs: EUR/USD.\nSignals are informational, not investment advice." } }] }
     ]
   }
 ]

@@ -1,20 +1,29 @@
 [
   {
-    "name": "Request Analysis",
+    "name": "Request Analysis requires a paid subscription",
     "steps": [
-      {
-        "expect": [
-          {
-            "method": "sendMessage",
-            "payload": {
-              "text": "Initiate on-demand currency pair analysis"
-            }
-          }
-        ],
-        "send": {
-          "callback": "analysis:request"
-        }
-      }
+      { "send": { "callback": "analysis:request" }, "expect": [{ "method": "editMessageText", "payload": { "text": "On-demand analysis is available with Paid signals. Choose a subscription to continue." } }] }
+    ]
+  },
+  {
+    "name": "paid user can request supported pair analysis",
+    "steps": [
+      { "send": { "callback": "sub:choose" }, "expect": [{ "method": "editMessageText" }] },
+      { "send": { "callback": "sub:paid" }, "expect": [{ "method": "editMessageText" }] },
+      { "send": { "callback": "risk:1" }, "expect": [{ "method": "editMessageText" }] },
+      { "send": { "callback": "pair:EURUSD" }, "expect": [{ "method": "editMessageText" }] },
+      { "send": { "callback": "pair:finish" }, "expect": [{ "method": "editMessageText" }] },
+      { "send": { "callback": "analysis:request" }, "expect": [{ "method": "editMessageText", "payload": { "text": "Send a currency pair, for example EUR/USD." } }] },
+      { "send": { "text": "EUR/USD" }, "expect": [{ "method": "sendMessage", "payload": { "text": "EUR/USD analysis isn’t available yet because a verified market-data feed hasn’t been connected. Try again after the feed is configured.\n\nSignals are informational, not investment advice." } }] }
+    ]
+  },
+  {
+    "name": "unsupported pair gets a clear error",
+    "steps": [
+      { "send": { "callback": "sub:choose" }, "expect": [{ "method": "editMessageText" }] },
+      { "send": { "callback": "sub:paid" }, "expect": [{ "method": "editMessageText" }] },
+      { "send": { "callback": "analysis:request" }, "expect": [{ "method": "editMessageText" }] },
+      { "send": { "text": "CAD/CHF" }, "expect": [{ "method": "sendMessage", "payload": { "text": "That pair isn’t supported. Try EUR/USD, GBP/USD, USD/JPY, or AUD/USD." } }] }
     ]
   }
 ]
